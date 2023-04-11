@@ -1,0 +1,11 @@
+.sidebar-container {
+  height: 100%; /* Altura de la pantalla completa */
+  width: 100%; /* Ancho del sidebar */
+  padding: 20px; /* Espacio interno del sidebar */
+  background-color: #aac1da; /* Color de fondo del sidebar */
+}
+@media (max-width: 767px) {
+  .sidebar-container {
+    display: none; /* Ocultar el sidebar en dispositivos móviles */
+  }
+}
