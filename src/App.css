@@ -8,4 +8,9 @@
   .sidebar-container {
     display: none; /* Ocultar el sidebar en dispositivos móviles */
   }
+
+}
+
+.navar {
+  background-color: #4e73df; /* Color de fondo del navar */
 }

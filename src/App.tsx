@@ -10,6 +10,7 @@ import CButton from "./components/CButton";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./components/SideBar";
 import SidebarHorizontal from "./components/SideBarHorizontal";
+import Prueba from "./components/Prueba";
 
 const App = () => {
   const { data: data1, llamada: llamada1, setdata } = useReadHook({ url: "Medico" });
@@ -105,15 +106,12 @@ const App = () => {
 
   return (
     <>
-      <Container fluid>
+      <div>
         <Row>
-          <SidebarHorizontal />
-        </Row>
-        <Row>
-          <Col xs={12} sm={3} md={3} lg={2} xl={2} className={isSidebarVisible ? "d-flex flex-column" : "d-none d-md-flex flex-column"}>
-            <Sidebar />
+          <Col xs={3} sm={3} md={4} lg={3} xl={2.5} className={isSidebarVisible ? "d-flex flex-column" : "d-none d-md-flex flex-column"}>
+            <Prueba />
           </Col>
-          <Col xs={12} sm={9} md={9} lg={10} xl={10}>
+          <Col xs={9} sm={9} md={8} lg={9} xl={8} className={"bg mx--5"}>
             <Container fluid>
               <div className="col align-self-start d-flex justify-content-center ">
                 <Card className="my-2 w-100" color="white">
@@ -184,7 +182,7 @@ const App = () => {
             </Table>
           </Col>
         </Row>
-      </Container>
+      </div>
 
       <Modal isOpen={modalActualizar}>
         <ModalHeader>

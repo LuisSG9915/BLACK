@@ -3,7 +3,7 @@ import { Nav, NavItem, NavLink } from "reactstrap";
 
 const Sidebar = () => {
   return (
-    <div className="sidebar-container">
+    <div className="navar">
       <Nav vertical>
         <NavItem>
           <NavLink href="/inicio">Inicio</NavLink>

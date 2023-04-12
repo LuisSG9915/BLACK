@@ -9,7 +9,7 @@ const SidebarHorizontal = () => {
   };
 
   return (
-    <Navbar color="light" light expand="md">
+    <Navbar color="blue" className="navar" light expand="md">
       <NavbarBrand className="ml-3" href="/">
         Mi Sidebar
       </NavbarBrand>
