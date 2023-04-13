@@ -115,6 +115,7 @@ const App = () => {
           </Col> */}
           <Col>
             <Container fluid>
+              <h1> Médicos </h1>
               <div className="col align-self-start d-flex justify-content-center ">
                 <Card className="my-2 w-100" color="white">
                   <CardHeader>Filtro</CardHeader>
@@ -187,8 +188,6 @@ const App = () => {
             </Table>
           </Col>
         </Row>
-
-        
       </Container>
       <Modal isOpen={modalActualizar}>
         <ModalHeader>

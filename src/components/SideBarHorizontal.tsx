@@ -20,8 +20,9 @@ const SidebarHorizontal = () => {
                 Inventario
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>Opción 1</DropdownItem>
-                <DropdownItem>Opción 2</DropdownItem>
+                <DropdownItem>Compras</DropdownItem>
+                <DropdownItem>Transacciones</DropdownItem>
+                <DropdownItem>Ajustes</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
 
@@ -30,8 +31,8 @@ const SidebarHorizontal = () => {
                 Ventas
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>Option 1</DropdownItem>
-                <DropdownItem>Option 2</DropdownItem>
+                <DropdownItem>Ventas</DropdownItem>
+                <DropdownItem>Dev s/vtas</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
 
@@ -40,8 +41,8 @@ const SidebarHorizontal = () => {
                 Citas
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>Option 1</DropdownItem>
-                <DropdownItem>Option 2</DropdownItem>
+                <DropdownItem>Visor</DropdownItem>
+                <DropdownItem>Configuracion</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
 
@@ -50,8 +51,9 @@ const SidebarHorizontal = () => {
                 Catálogos
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>Option 1</DropdownItem>
-                <DropdownItem>Option 2</DropdownItem>
+                <DropdownItem>Admvos</DropdownItem>
+                <DropdownItem>RRHH</DropdownItem>
+                <DropdownItem>Configuración</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
 
@@ -60,8 +62,8 @@ const SidebarHorizontal = () => {
                 Reportes
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>Option 1</DropdownItem>
-                <DropdownItem>Option 2</DropdownItem>
+                <DropdownItem>Ventas</DropdownItem>
+                <DropdownItem>Citas</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
 
@@ -70,8 +72,9 @@ const SidebarHorizontal = () => {
                 Configuración
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>Option 1</DropdownItem>
-                <DropdownItem>Option 2</DropdownItem>
+                <DropdownItem>User</DropdownItem>
+                <DropdownItem>Perf</DropdownItem>
+                <DropdownItem>Bitacoras</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
