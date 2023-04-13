@@ -9,6 +9,7 @@ import CFormGroupInput from "./components/CFormGroupInput";
 import CButton from "./components/CButton";
 import { useNavigate } from "react-router-dom";
 import SidebarHorizontal from "./components/SideBarHorizontal";
+import Prueba from "./components/Prueba";
 
 const App = () => {
   const { data: data1, llamada: llamada1, setdata } = useReadHook({ url: "Medico" });
