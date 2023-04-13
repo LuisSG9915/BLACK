@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Table, Button, Col, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, Label, Input, Container } from "reactstrap";
+import { Table, Button, Col, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, Label, Input, Container, Row } from "reactstrap";
 
 import useReadHook, { Forma, DataClinica } from "../hooks/useReadHook";
 import useModalHook from "../hooks/useModalHook";
 
 import CFormGroupInput from "../components/CFormGroupInput";
 import CButton from "../components/CButton";
+import { jezaApi } from "../api/jezaApi";
+import SidebarHorizontal from "../components/SideBarHorizontal";
 
 function Menu() {
   const { data: data1, llamada: llamada1, setdata } = useReadHook({ url: "Clinica" });
-  const { modalActualizar, modalInsertar, setModalInsertar, setModalActualizar, cerrarModalActualizar, cerrarModalInsertar, mostrarModalInsertar } = useModalHook();
+  const { modalInsertar, setModalInsertar, setModalActualizar, cerrarModalActualizar, cerrarModalInsertar, mostrarModalInsertar } = useModalHook();
   const Data = ["ID", "Clinica", "Acciones"];
   const [filtroValorClinica, setFiltroValorClinica] = useState("");
+  const [dataClinica, setDataClinica] = useState<undefined | string>("");
+  const [dataClinicaID, setDataClinicaID] = useState<undefined | number>(0);
 
   const [form, setForm] = useState<Forma>({
     id: 1,
@@ -36,8 +40,28 @@ function Menu() {
     const { name, value } = e.target;
     setForm((prevState) => ({ ...prevState, [name]: value }));
   };
+
+  const insertar = () => {
+    jezaApi
+      .post("/Medico", {
+        nombre: form.nombre,
+        email: form.email,
+        idClinica: dataClinicaID,
+        telefono: "",
+        mostrarTel: false,
+      })
+      .then(() => {
+        llamada1();
+      });
+    setModalInsertar(false);
+  };
+
   return (
     <>
+      <Row>
+        <SidebarHorizontal />
+      </Row>
+      <br />
       <div className="container px-2 ">
         <h1> Crear Médicos </h1>
         <br />
@@ -45,18 +69,23 @@ function Menu() {
           <CFormGroupInput handleChange={handleChange} inputName="nombre" labelName="Medico:" value={form.nombre} />
         </div>
         <CFormGroupInput handleChange={handleChange} inputName="email" labelName="Email:" value={form.email} />
-        <br />
-        <FormGroup row>
-          <Label for="exampleSelect" sm={2}>
-            IdClinica
-          </Label>
-          <Col sm={10}>
-            <Input id="idClinica" name="select" type="text" onClick={mostrarModalInsertar}></Input>
-          </Col>
+        <FormGroup>
+          <Label for="exampleSelect">Clinica</Label>
+          <Row className="align-items-center">
+            <Col sm={"9"} m={"8"} lg={"10"} xs>
+              <Input className="" id="idClinica" name="select" type="text" value={dataClinica}></Input>
+            </Col>
+            <Col>
+              <Button className="" color="success" onClick={() => mostrarModalInsertar()}>
+                Seleccionar Clinica
+              </Button>
+            </Col>
+          </Row>
         </FormGroup>
         <br />
-        <div className="">
-          <CButton color="success" onClick={() => mostrarModalInsertar()} text="Crear médico"></CButton>
+        <br />
+        <div className="8bnm">
+          <CButton color="success" onClick={() => insertar()} text="Crear Médico"></CButton>
         </div>
       </div>
 
@@ -98,7 +127,15 @@ function Menu() {
                     <td>{dato.id}</td>
                     <td>{dato.nombre}</td>
                     <td>
-                      <CButton color="success" onClick={() => console.log("a")} text="Seleccionar" />
+                      <CButton
+                        color="success"
+                        onClick={() => {
+                          setDataClinica(dato.nombre);
+                          setDataClinicaID(dato.id);
+                          cerrarModalInsertar();
+                        }}
+                        text="Seleccionar"
+                      />
                     </td>
                   </tr>
                 ))}

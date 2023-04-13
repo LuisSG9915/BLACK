@@ -1,5 +1,5 @@
 import React from "react";
-import { FormGroup, Input } from "reactstrap";
+import { FormGroup, Input, Label } from "reactstrap";
 interface Props {
   handleChange: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => void;
   labelName: string;
@@ -9,7 +9,7 @@ interface Props {
 function CFormGroupInput({ handleChange, inputName, labelName, value }: Props) {
   return (
     <FormGroup>
-      <label>{labelName}</label>
+      <Label>{labelName}</Label>
       <Input className="form-control" name={inputName} type="text" onChange={handleChange} value={value} />
     </FormGroup>
   );

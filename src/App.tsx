@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Table, Button, Container, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, CardBody, CardHeader, CardText, CardTitle, Card, Row, Input, Col } from "reactstrap";
+import { Table, Container, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, CardBody, CardHeader, CardText, CardTitle, Card, Row, Input, Col } from "reactstrap";
 import { jezaApi } from "./api/jezaApi";
 import useReadHook, { Forma, DataClinica } from "./hooks/useReadHook";
 import useModalHook from "./hooks/useModalHook";
 import CFormGroupInput from "./components/CFormGroupInput";
 import CButton from "./components/CButton";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "./components/SideBar";
 import SidebarHorizontal from "./components/SideBarHorizontal";
 
 const App = () => {
@@ -75,7 +74,7 @@ const App = () => {
         telefono: "",
         mostrarTel: false,
       })
-      .then((response) => {
+      .then(() => {
         llamada1();
       });
     setModalInsertar(false);
@@ -97,23 +96,24 @@ const App = () => {
   const handleNav = () => {
     navigate("/menu");
   };
-  const [isSidebarVisible, setSidebarVisible] = useState(true);
+  const [isSidebarVisible, setSidebarVisible] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarVisible(!isSidebarVisible);
   };
-
   return (
     <>
-      <Container fluid>
         <Row>
           <SidebarHorizontal />
         </Row>
+      <Container>
+        {/* <br /> */}
+
         <Row>
-          <Col xs={12} sm={3} md={3} lg={2} xl={2} className={isSidebarVisible ? "d-flex flex-column" : "d-none d-md-flex flex-column"}>
+          {/* <Col xs={3} sm={3} md={4} lg={3} xl={2} className={isSidebarVisible ? "d-flex flex-column" : "d-none d-sm-flex flex-column"}>
             <Sidebar />
-          </Col>
-          <Col xs={12} sm={9} md={9} lg={10} xl={10}>
+          </Col> */}
+          <Col>
             <Container fluid>
               <div className="col align-self-start d-flex justify-content-center ">
                 <Card className="my-2 w-100" color="white">
@@ -147,19 +147,19 @@ const App = () => {
                       </div>
                     </Row>
                     <br />
-                    <div className="d-flex justify-content-around">
+                    <div className="d-flex justify-content-end">
                       <CButton color="success" onClick={() => filtroEmail(filtroValorMedico, filtroValorEmail)} text="Filtro" />
                     </div>
                   </CardBody>
                 </Card>
               </div>
               <Container className="d-flex justify-content-end ">
-                <CButton color="success" onClick={() => handleNav()} text="Crear usuario" />
+                <CButton color="success" onClick={() => handleNav()} text="Crear médico" />
               </Container>
             </Container>
             <br />
             <br />
-            <Table>
+            <Table size="sm" striped ={true}>
               <thead>
                 <tr>
                   {Data.map((valor) => (
@@ -175,8 +175,10 @@ const App = () => {
                     <td>{dato.email}</td>
                     <td>{dato.idClinica}</td>
                     <td>
-                      <CButton color="primary" onClick={() => mostrarModalActualizar(dato)} text="Editar" />
-                      <CButton color="danger" onClick={() => eliminar(dato)} text="Eliminar" />
+                      <Container className="">
+                        <CButton color="primary" onClick={() => mostrarModalActualizar(dato)} text="Editar" />
+                        <CButton color="danger" onClick={() => eliminar(dato)} text="Eliminar" />
+                      </Container>
                     </td>
                   </tr>
                 ))}
@@ -185,7 +187,6 @@ const App = () => {
           </Col>
         </Row>
       </Container>
-
       <Modal isOpen={modalActualizar}>
         <ModalHeader>
           <div>
