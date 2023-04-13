@@ -9,8 +9,8 @@ import CFormGroupInput from "./components/CFormGroupInput";
 import CButton from "./components/CButton";
 import { useNavigate } from "react-router-dom";
 import SidebarHorizontal from "./components/SideBarHorizontal";
-import Prueba from "./components/Prueba";
 
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 const App = () => {
   const { data: data1, llamada: llamada1, setdata } = useReadHook({ url: "Medico" });
   const { data: data2 } = useReadHook({ url: "Clinica" });
@@ -18,7 +18,6 @@ const App = () => {
   const [filtroValorMedico, setFiltroValorMedico] = useState("");
   const [filtroValorEmail, setFiltroValorEmail] = useState("");
   const navigate = useNavigate();
-
   const [form, setForm] = useState<Forma>({
     id: 1,
     nombre: "",
@@ -104,9 +103,9 @@ const App = () => {
   };
   return (
     <>
-        <Row>
-          <SidebarHorizontal />
-        </Row>
+      <Row>
+        <SidebarHorizontal />
+      </Row>
       <Container>
         {/* <br /> */}
 
@@ -160,11 +159,14 @@ const App = () => {
             </Container>
             <br />
             <br />
-            <Table size="sm" striped ={true}>
+
+            <Table size="sm" striped={true} responsive={"sm"}>
               <thead>
                 <tr>
                   {Data.map((valor) => (
-                    <th key={valor}>{valor}</th>
+                    <th className="" key={valor}>
+                      {valor}
+                    </th>
                   ))}
                 </tr>
               </thead>
@@ -175,11 +177,9 @@ const App = () => {
                     <td>{dato.nombre}</td>
                     <td>{dato.email}</td>
                     <td>{dato.idClinica}</td>
-                    <td>
-                      <Container className="">
-                        <CButton color="primary" onClick={() => mostrarModalActualizar(dato)} text="Editar" />
-                        <CButton color="danger" onClick={() => eliminar(dato)} text="Eliminar" />
-                      </Container>
+                    <td className="gap-5">
+                      <AiFillEdit className="mr-2" onClick={() => mostrarModalActualizar(dato)} size={23}></AiFillEdit>
+                      <AiFillDelete color="lightred" onClick={() => eliminar(dato)} size={23}></AiFillDelete>
                     </td>
                   </tr>
                 ))}
@@ -187,6 +187,8 @@ const App = () => {
             </Table>
           </Col>
         </Row>
+
+        
       </Container>
       <Modal isOpen={modalActualizar}>
         <ModalHeader>
