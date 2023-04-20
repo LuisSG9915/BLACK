@@ -2,6 +2,7 @@
   "name": "crudmaster",
   "private": true,
   "version": "0.0.0",
+  "homepage": "http://luisantos/black/",
   "type": "module",
   "scripts": {
     "dev": "vite",

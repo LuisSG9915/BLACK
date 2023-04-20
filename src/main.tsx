@@ -3,7 +3,15 @@ import ReactDOM from "react-dom";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import "./index.css";
+import InvCompras from "./screens/inventario/InvCompras";
 import Menu from "./screens/Menu";
+
+const DataRoutes = [
+  {
+    path: "/InvCompras",
+    element: <InvCompras />
+  }
+]
 
 const router = createBrowserRouter([
   {
@@ -13,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/menu",
     element: <Menu />,
+  },
+  {
+    path: "/InvCompras",
+    element: <InvCompras />,
   },
 ]);
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Table, Button, Col, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, Label, Input, Container, Row } from "reactstrap";
+import { Table, Button, Col, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, Label, Input, Container, Row, Card } from "reactstrap";
 
 import useReadHook, { Forma, DataClinica } from "../hooks/useReadHook";
 import useModalHook from "../hooks/useModalHook";
@@ -9,6 +9,8 @@ import CFormGroupInput from "../components/CFormGroupInput";
 import CButton from "../components/CButton";
 import { jezaApi } from "../api/jezaApi";
 import SidebarHorizontal from "../components/SideBarHorizontal";
+import TabPrueba from "./TabPrueba";
+import { AiOutlineSelect } from "react-icons/ai";
 
 function Menu() {
   const { data: data1, llamada: llamada1, setdata } = useReadHook({ url: "Clinica" });
@@ -85,9 +87,20 @@ function Menu() {
         <br />
         <br />
         <div className="8bnm">
-          <CButton color="success" onClick={() => insertar()} text="Crear Médico"></CButton>
+          <Button outline color={"success"} onClick={() => insertar()}>
+            <AiOutlineSelect className="mr-2" size={23}></AiOutlineSelect>
+            Crear Médico
+          </Button>
         </div>
       </div>
+      <br />
+
+      <Container>
+        <Card body>
+          <TabPrueba></TabPrueba>
+        </Card>
+      </Container>
+      <div className="mb-5"></div>
 
       <Modal isOpen={modalInsertar} size={"xl"} fade hover>
         <ModalHeader>
