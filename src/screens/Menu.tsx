@@ -10,8 +10,8 @@ import CButton from "../components/CButton";
 import { jezaApi } from "../api/jezaApi";
 import SidebarHorizontal from "../components/SideBarHorizontal";
 import TabPrueba from "./TabPrueba";
-import { Dots } from "react-activity";
-import "react-activity/dist/library.css";
+import { AiOutlineSelect } from "react-icons/ai";
+
 function Menu() {
   const { data: data1, llamada: llamada1, setdata } = useReadHook({ url: "Clinica" });
   const { modalInsertar, setModalInsertar, setModalActualizar, cerrarModalActualizar, cerrarModalInsertar, mostrarModalInsertar } = useModalHook();
@@ -46,20 +46,20 @@ function Menu() {
     setForm((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  // const insertar = () => {
-  //   jezaApi
-  //     .post("/Medico", {
-  //       nombre: form.nombre,
-  //       email: form.email,
-  //       idClinica: dataClinicaID,
-  //       telefono: "",
-  //       mostrarTel: false,
-  //     })
-  //     .then(() => {
-  //       llamada1();
-  //     });
-  //   setModalInsertar(false);
-  // };
+  const insertar = () => {
+    jezaApi
+      .post("/Medico", {
+        nombre: form.nombre,
+        email: form.email,
+        idClinica: dataClinicaID,
+        telefono: "",
+        mostrarTel: false,
+      })
+      .then(() => {
+        llamada1();
+      });
+    setModalInsertar(false);
+  };
   const insertar2 = () => {
     if (form.nombre=== '' || form.email=== '') {
       console.log("nada")
@@ -129,20 +129,14 @@ function Menu() {
         <br />
         <br />
         <div className="8bnm">
-          {/* <CButton color="success" onClick={() => insertar()} text="Crear Médico"></CButton> */}
-          <div>
-
-          <Button onClick={() => insertar2()} > Crear Médico </Button>
-              {/* {isClicked && !isLoading ? <div>✅</div> : null}
-              {isClicked && isLoading ? <Dots/> : null} */}
-          </div>
-          <br />
-          <Alert color="success" isOpen={isClicked} toggle={onDismiss}>
-            Médico creado con éxito
-          </Alert>
+          <Button outline color={"success"} onClick={() => insertar()}>
+            <AiOutlineSelect className="mr-2" size={23}></AiOutlineSelect>
+            Crear Médico
+          </Button>
         </div>
       </div>
       <br />
+
       <Container>
         <Card body>
           <TabPrueba></TabPrueba>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Table, Container, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, CardBody, CardHeader, CardText, CardTitle, Card, Row, Input, Col } from "reactstrap";
+import { Table, Container, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, CardBody, CardHeader, CardText, CardTitle, Card, Row, Input, Col, Button } from "reactstrap";
 import { jezaApi } from "./api/jezaApi";
 import useReadHook, { Forma, DataClinica } from "./hooks/useReadHook";
 import useModalHook from "./hooks/useModalHook";
@@ -10,7 +10,8 @@ import CButton from "./components/CButton";
 import { useNavigate } from "react-router-dom";
 import SidebarHorizontal from "./components/SideBarHorizontal";
 
-import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { AiFillDelete, AiFillEdit, AiFillFilter, AiFillSmile } from "react-icons/ai";
+
 const App = () => {
   const { data: data1, llamada: llamada1, setdata } = useReadHook({ url: "Medico" });
   const { data: data2 } = useReadHook({ url: "Clinica" });
@@ -116,7 +117,20 @@ const App = () => {
           <Col>
             <Container fluid>
               <br />
-              <h1> Médicos </h1>
+              <Row >
+                <Col>
+                  <h1> Médicos </h1>
+                </Col>
+                <Col>
+                  <Container className="d-flex justify-content-end ">
+                    <Button outline color={"success"} onClick={() => handleNav()}>
+                      <AiFillSmile className="mr-2" size={23}></AiFillSmile>
+                      Crear Médico
+                    </Button>
+                  </Container>
+                </Col>
+              </Row>
+
               <div className="col align-self-start d-flex justify-content-center ">
                 <Card className="my-2 w-100" color="white">
                   <CardHeader>Filtro</CardHeader>
@@ -150,14 +164,14 @@ const App = () => {
                     </Row>
                     <br />
                     <div className="d-flex justify-content-end">
-                      <CButton color="success" onClick={() => filtroEmail(filtroValorMedico, filtroValorEmail)} text="Filtro" />
+                      <Button outline color={"success"} onClick={() => filtroEmail(filtroValorMedico, filtroValorEmail)}>
+                        <AiFillFilter className="mr-2" size={23}></AiFillFilter>
+                        Filtro
+                      </Button>
                     </div>
                   </CardBody>
                 </Card>
               </div>
-              <Container className="d-flex justify-content-end ">
-                <CButton color="success" onClick={() => handleNav()} text="Crear médico" />
-              </Container>
             </Container>
             <br />
             <br />
