@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Table, Button, Col, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, Label, Input, Container, Row } from "reactstrap";
+import { Table, Button, Col, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, Label, Input, Container, Row, Card, Alert } from "reactstrap";
 
 import useReadHook, { Forma, DataClinica } from "../hooks/useReadHook";
 import useModalHook from "../hooks/useModalHook";
@@ -9,7 +9,9 @@ import CFormGroupInput from "../components/CFormGroupInput";
 import CButton from "../components/CButton";
 import { jezaApi } from "../api/jezaApi";
 import SidebarHorizontal from "../components/SideBarHorizontal";
-
+import TabPrueba from "./TabPrueba";
+import { Dots } from "react-activity";
+import "react-activity/dist/library.css";
 function Menu() {
   const { data: data1, llamada: llamada1, setdata } = useReadHook({ url: "Clinica" });
   const { modalInsertar, setModalInsertar, setModalActualizar, cerrarModalActualizar, cerrarModalInsertar, mostrarModalInsertar } = useModalHook();
@@ -17,6 +19,9 @@ function Menu() {
   const [filtroValorClinica, setFiltroValorClinica] = useState("");
   const [dataClinica, setDataClinica] = useState<undefined | string>("");
   const [dataClinicaID, setDataClinicaID] = useState<undefined | number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isClicked, setIsClicked] = useState<boolean>(false);
+  const [isOk, setIsOk] = useState<string>("false");
 
   const [form, setForm] = useState<Forma>({
     id: 1,
@@ -41,8 +46,28 @@ function Menu() {
     setForm((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const insertar = () => {
-    jezaApi
+  // const insertar = () => {
+  //   jezaApi
+  //     .post("/Medico", {
+  //       nombre: form.nombre,
+  //       email: form.email,
+  //       idClinica: dataClinicaID,
+  //       telefono: "",
+  //       mostrarTel: false,
+  //     })
+  //     .then(() => {
+  //       llamada1();
+  //     });
+  //   setModalInsertar(false);
+  // };
+  const insertar2 = () => {
+    if (form.nombre=== '' || form.email=== '') {
+      console.log("nada")
+      setIsOk("no")
+    }else{
+      setIsClicked(true)
+      setIsLoading(true)
+      jezaApi
       .post("/Medico", {
         nombre: form.nombre,
         email: form.email,
@@ -52,9 +77,28 @@ function Menu() {
       })
       .then(() => {
         llamada1();
-      });
-    setModalInsertar(false);
-  };
+        setIsLoading(false)
+        }).catch((e) => {
+        setIsLoading(false)
+        setIsOk("si")
+        });
+      setModalInsertar(false);    
+    }
+}
+
+  function onDismiss(): void {
+    setIsClicked(false);
+    setForm({
+      id: 1,
+      nombre: "",
+      email: "",
+      idClinica: 1,
+      nombreClinica: "",
+      telefono: "",
+      mostrarTel: false,
+    });
+    setDataClinica("")
+  }
 
   return (
     <>
@@ -85,10 +129,25 @@ function Menu() {
         <br />
         <br />
         <div className="8bnm">
-          <CButton color="success" onClick={() => insertar()} text="Crear Médico"></CButton>
+          {/* <CButton color="success" onClick={() => insertar()} text="Crear Médico"></CButton> */}
+          <div>
+
+          <Button onClick={() => insertar2()} > Crear Médico </Button>
+              {/* {isClicked && !isLoading ? <div>✅</div> : null}
+              {isClicked && isLoading ? <Dots/> : null} */}
+          </div>
+          <br />
+          <Alert color="success" isOpen={isClicked} toggle={onDismiss}>
+            Médico creado con éxito
+          </Alert>
         </div>
       </div>
-
+      <br />
+      <Container>
+        <Card body>
+          <TabPrueba></TabPrueba>
+        </Card>
+      </Container>
       <Modal isOpen={modalInsertar} size={"xl"} fade hover>
         <ModalHeader>
           <div>

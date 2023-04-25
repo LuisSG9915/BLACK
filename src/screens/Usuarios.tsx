@@ -1,18 +1,13 @@
-import React, { useState } from "react";
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Table, Container, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, CardBody, CardHeader, CardText, CardTitle, Card, Row, Input, Col } from "reactstrap";
-import { jezaApi } from "./api/jezaApi";
-import useReadHook, { Forma, DataClinica } from "./hooks/useReadHook";
-import useModalHook from "./hooks/useModalHook";
-import CFormGroupInput from "./components/CFormGroupInput";
-import CButton from "./components/CButton";
-import { useNavigate } from "react-router-dom";
-import SidebarHorizontal from "./components/SideBarHorizontal";
-
-import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-const App = () => {
-  const { data: data1, llamada: llamada1, setdata } = useReadHook({ url: "Medico" });
+import React from 'react'
+import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
+import { Row, Container, Col, Card, CardHeader, CardBody, CardTitle, CardText, Input, Table, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter } from 'reactstrap';
+import CButton from '../components/CButton';
+import CFormGroupInput from '../components/CFormGroupInput';
+import SidebarHorizontal from '../components/SideBarHorizontal';
+import { Forma, DataClinica } from '../hooks/useReadHook';
+import { useNavigate } from 'react-router-dom';
+import { jezaApi } from '../api/jezaApi';
+ const { data: data1, llamada: llamada1, setdata } = useReadHook({ url: "Medico" });
   const { data: data2 } = useReadHook({ url: "Clinica" });
   const { modalActualizar, modalInsertar, setModalInsertar, setModalActualizar, cerrarModalActualizar, cerrarModalInsertar, mostrarModalInsertar } = useModalHook();
   const [filtroValorMedico, setFiltroValorMedico] = useState("");
@@ -91,18 +86,19 @@ const App = () => {
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setForm((prevState) => ({ ...prevState, [name]: value }));
+    setForm((prevState: any) => ({ ...prevState, [name]: value }));
   };
   const handleNav = () => {
     navigate("/menu");
   };
-  const [isSidebarVisible, setSidebarVisible] = useState(false);
+  const [isSidebarVisible, setSidebarVisible] = useState<boolean>(false);
 
   const toggleSidebar = () => {
     setSidebarVisible(!isSidebarVisible);
   };
+function Usuarios() {
   return (
-    <>
+<>
       <Row>
         <SidebarHorizontal />
       </Row>
@@ -233,8 +229,21 @@ const App = () => {
           <CButton color="btn btn-danger" onClick={() => cerrarModalInsertar()} text="Cancelar" />
         </ModalFooter>
       </Modal>
-    </>
-  );
-};
+    </>  )
+}
 
-export default App;
+export default Usuarios
+
+function useReadHook(arg0: { url: string; }): { data: any; llamada: any; setdata: any; } {
+    throw new Error('Function not implemented.');
+}
+
+
+function useModalHook(): { modalActualizar: any; modalInsertar: any; setModalInsertar: any; setModalActualizar: any; cerrarModalActualizar: any; cerrarModalInsertar: any; mostrarModalInsertar: any; } {
+    throw new Error('Function not implemented.');
+}
+
+
+function useState(arg0: string): [any, any] {
+    throw new Error('Function not implemented.');
+}
