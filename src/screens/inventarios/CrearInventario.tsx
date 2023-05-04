@@ -1,18 +1,15 @@
-import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Table, Button, Col, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, Label, Input, Container, Row, Card, Alert } from "reactstrap";
+import React, { useState } from 'react'
+import useReadHook, { Forma } from '../../hooks/useReadHook';
+import { useNavigate } from 'react-router-dom';
+import useModalHook from '../../hooks/useModalHook';
+import { jezaApi } from '../../api/jezaApi';
+import { Row, FormGroup, Col, Button, Alert, Container, Card, Modal, ModalHeader, ModalBody, Input, Table, ModalFooter, Label } from 'reactstrap';
+import CButton from '../../components/CButton';
+import CFormGroupInput from '../../components/CFormGroupInput';
+import SidebarHorizontal from '../../components/SideBarHorizontal';
+import TabPrueba from '../TabPrueba';
 
-import useReadHook, { Forma, DataClinica } from "../hooks/useReadHook";
-import useModalHook from "../hooks/useModalHook";
-
-import CFormGroupInput from "../components/CFormGroupInput";
-import CButton from "../components/CButton";
-import { jezaApi } from "../api/jezaApi";
-import SidebarHorizontal from "../components/SideBarHorizontal";
-import TabPrueba from "./TabPrueba";
-import { Dots } from "react-activity";
-import "react-activity/dist/library.css";
-function Menu() {
+function CrearInventario() {
   const { data: data1, llamada: llamada1, setdata } = useReadHook({ url: "Clinica" });
   const { modalInsertar, setModalInsertar, setModalActualizar, cerrarModalActualizar, cerrarModalInsertar, mostrarModalInsertar } = useModalHook();
   const Data = ["ID", "Clinica", "Acciones"];
@@ -22,6 +19,8 @@ function Menu() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isOk, setIsOk] = useState<string>("false");
+     const [filtroValorEmail, setFiltroValorEmail] = useState("");
+     const navigate = useNavigate();
 
   const [form, setForm] = useState<Forma>({
     id: 1,
@@ -32,6 +31,14 @@ function Menu() {
     telefono: "",
     mostrarTel: false,
   });
+    const mostrarModalActualizar = (dato: Forma) => {
+       setForm(dato);
+       setModalActualizar(true);
+     };
+       const handleNav = () => {
+       navigate("/UsuariosCrear");
+     };
+     const [filtroValorMedico, setFiltroValorMedico] = useState("");
 
   const filtroMédico = (datoMedico: string) => {
     var resultado = data1.filter((elemento: any) => {
@@ -41,10 +48,29 @@ function Menu() {
     });
     setdata(resultado);
   };
+      const filtroEmail = (datoMedico: string, datoEmail: string) => {
+       var resultado = data1.filter((elemento: any) => {
+         // Aplica la lógica del filtro solo si hay valores en los inputs
+         if ((datoEmail === "" || elemento.email.toLowerCase().includes(datoEmail.toLowerCase())) && (datoMedico === "" || elemento.nombre.toLowerCase().includes(datoMedico.toLowerCase())) && elemento.nombre.length > 2) {
+           return elemento;
+         }
+       });
+       setdata(resultado);
+     };
+         const eliminar = (dato: Forma) => {
+       const opcion = window.confirm(`Estás Seguro que deseas Eliminar el elemento ${dato.id}`);
+       if (opcion) {
+         jezaApi.delete(`/Medico?idMedico=${dato.id}`).then(() => {
+           setModalActualizar(false);
+           llamada1();
+         });
+       }
+     };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     setForm((prevState) => ({ ...prevState, [name]: value }));
   };
+    const DataTableHeader = ["Usuario", "Nombre", "Celular", "Telefono", "Email","Fecha Alta", "Fecha Actualización", "Acciones" ];
 
   // const insertar = () => {
   //   jezaApi
@@ -100,21 +126,19 @@ function Menu() {
     setDataClinica("")
   }
 
+
   return (
+    <>
     <>
       <Row>
         <SidebarHorizontal />
       </Row>
       <br />
       <div className="container px-2 ">
-        <h1> Crear Médicos </h1>
+        <h1> Crear Inventario </h1>
         <br />
-        <div className="flex-row align-content-md-end">
-          <CFormGroupInput handleChange={handleChange} inputName="nombre" labelName="Medico:" value={form.nombre} />
-        </div>
-        <CFormGroupInput handleChange={handleChange} inputName="email" labelName="Email:" value={form.email} />
         <FormGroup>
-          <Label for="exampleSelect">Clinica</Label>
+          <Label for="exampleSelect">Sucursal</Label>
           <Row className="align-items-center">
             <Col sm={"9"} m={"8"} lg={"10"} xs>
               <Input className="" id="idClinica" name="select" type="text" value={dataClinica}></Input>
@@ -125,6 +149,38 @@ function Menu() {
               </Button>
             </Col>
           </Row>
+          <Label>Almacen</Label>
+          <Input value={""} ></Input>
+
+          <Label for="exampleSelect">Fecha Movimiento</Label>
+          <Row className="align-items-center">
+            <Col sm={"9"} m={"8"} lg={"10"} xs>
+              <Input className="" id="idClinica" name="select" type="text" value={dataClinica}></Input>
+            </Col>
+            <Col>
+              <Button className="" color="success" onClick={() => mostrarModalInsertar()}>
+                Seleccionar Fecha Mov
+              </Button>
+            </Col>
+          </Row>
+
+          <Label for="exampleSelect">Folio Movto</Label>
+          <Row className="align-items-center">
+            <Col sm={"9"} m={"8"} lg={"10"} xs>
+              <Input className="" id="idClinica" name="select" type="text" value={dataClinica}></Input>
+            </Col>
+            <Col>
+              <Button className="" color="success" onClick={() => mostrarModalInsertar()}>
+                Seleccionar Movto
+              </Button>
+            </Col>
+          </Row>
+
+            <Label>Cantidad Entrada</Label>
+            <Input value={""}></Input>
+            <Label>Cantidad Salida</Label>
+            <Input value={""}></Input>
+
         </FormGroup>
         <br />
         <br />
@@ -132,13 +188,13 @@ function Menu() {
           {/* <CButton color="success" onClick={() => insertar()} text="Crear Médico"></CButton> */}
           <div>
 
-          <Button onClick={() => insertar2()} > Crear Médico </Button>
+          <Button onClick={() => insertar2()} > Crear Usuario </Button>
               {/* {isClicked && !isLoading ? <div>✅</div> : null}
               {isClicked && isLoading ? <Dots/> : null} */}
           </div>
           <br />
-          <Alert color="success" isOpen={isClicked} toggle={onDismiss}>
-            Médico creado con éxito
+          <Alert color="success" isOpen={isClicked} toggle={onDismiss}> 
+            Usuario creado con éxito
           </Alert>
         </div>
       </div>
@@ -205,7 +261,8 @@ function Menu() {
         <ModalFooter></ModalFooter>
       </Modal>
     </>
-  );
+    </>
+  )
 }
 
-export default Menu;
+export default CrearInventario
