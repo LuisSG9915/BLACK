@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate, useNavigation } from "react-router-dom";
 import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Collapse, NavbarToggler, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, NavbarText } from "reactstrap";
 
 const SidebarHorizontal = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const navigate = useNavigate();
   const toggle = () => {
     setIsOpen(!isOpen);
   };
@@ -22,7 +23,7 @@ const SidebarHorizontal = () => {
               <DropdownMenu right>
                 <DropdownItem>Compras</DropdownItem>
                 <DropdownItem>Transacciones</DropdownItem>
-                <DropdownItem>Ajustes</DropdownItem>
+                <DropdownItem onClick={() => navigate("/InventariosAjustes")}>Ajustes</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
 
@@ -72,9 +73,23 @@ const SidebarHorizontal = () => {
                 Configuración
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>User</DropdownItem>
+                <DropdownItem onClick={() => navigate("/usuarios")}>User</DropdownItem>
                 <DropdownItem>Perf</DropdownItem>
                 <DropdownItem>Bitacoras</DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                Realizados
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem onClick={() => navigate("/usuarios")}>User</DropdownItem>
+                <DropdownItem onClick={() => navigate("/InventariosAjustes")}>Inventario No</DropdownItem>
+                <DropdownItem onClick={() => navigate("/Sucursales")}>Sucursales</DropdownItem>
+                <DropdownItem onClick={() => navigate("/Proveedores")}>Proveedores</DropdownItem>
+                <DropdownItem onClick={() => navigate("/NominaTrabajadores")}>NominaTrabajadores</DropdownItem>
+                <DropdownItem onClick={() => navigate("/Productos")}>Productos</DropdownItem>
+                <DropdownItem onClick={() => navigate("/Perfiles")}>Perfiles</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
