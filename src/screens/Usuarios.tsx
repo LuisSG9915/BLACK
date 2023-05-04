@@ -1,35 +1,32 @@
-import React, { useState } from "react";
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { createContext, useState } from "react";
+import { AiFillEdit, AiFillDelete, AiOutlineUser } from "react-icons/ai";
 import {
-  Table,
+  Row,
   Container,
+  Col,
+  Card,
+  CardHeader,
+  CardBody,
+  CardTitle,
+  CardText,
+  Input,
+  Table,
   Modal,
   ModalHeader,
   ModalBody,
   FormGroup,
   ModalFooter,
-  CardBody,
-  CardHeader,
-  CardText,
-  CardTitle,
-  Card,
-  Row,
-  Input,
-  Col,
   Button,
 } from "reactstrap";
-import { jezaApi } from "./api/jezaApi";
-import useReadHook, { Forma, DataClinica } from "./hooks/useReadHook";
-import useModalHook from "./hooks/useModalHook";
-import CFormGroupInput from "./components/CFormGroupInput";
-import CButton from "./components/CButton";
+import CButton from "../components/CButton";
+import CFormGroupInput from "../components/CFormGroupInput";
+import SidebarHorizontal from "../components/SideBarHorizontal";
+import useReadHook, { Forma, DataClinica } from "../hooks/useReadHook";
 import { useNavigate } from "react-router-dom";
-import SidebarHorizontal from "./components/SideBarHorizontal";
+import { jezaApi } from "../api/jezaApi";
+import useModalHook from "../hooks/useModalHook";
 
-import { AiFillDelete, AiFillEdit, AiFillFilter, AiFillSmile } from "react-icons/ai";
-
-const App = () => {
+function Usuarios() {
   const { data: data1, llamada: llamada1, setdata } = useReadHook({ url: "Medico" });
   const { data: data2 } = useReadHook({ url: "Clinica" });
   const {
@@ -54,7 +51,7 @@ const App = () => {
     mostrarTel: false,
   });
 
-  const Data = ["ID", "Medico", "Email", "IdClinica", "Acciones"];
+  const DataTableHeader = ["Usuario", "Nombre", "Celular", "Telefono", "Email", "Fecha Alta", "Fecha Actualización", "Acciones"];
 
   const mostrarModalActualizar = (dato: Forma) => {
     setForm(dato);
@@ -121,10 +118,13 @@ const App = () => {
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setForm((prevState) => ({ ...prevState, [name]: value }));
+    setForm((prevState: any) => ({ ...prevState, [name]: value }));
   };
   const handleNav = () => {
-    navigate("/menu");
+    navigate("/UsuariosCrear");
+  };
+  const handleNavs = () => {
+    navigate("/UsuariosPrueba");
   };
   const [isSidebarVisible, setSidebarVisible] = useState(false);
 
@@ -137,27 +137,21 @@ const App = () => {
         <SidebarHorizontal />
       </Row>
       <Container>
-        {/* <br /> */}
-
         <Row>
-          {/* <Col xs={3} sm={3} md={4} lg={3} xl={2} className={isSidebarVisible ? "d-flex flex-column" : "d-none d-sm-flex flex-column"}>
-            <Sidebar />
-          </Col> */}
           <Col>
             <Container fluid>
               <br />
-              <h1> Médicos </h1>
-              <Container className="d-flex justify-content-end ">
-                <CButton color="success" onClick={() => handleNav()} text="Crear médico" />
-              </Container>
-              <br />
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <h1> Usuarios </h1>
+                <AiOutlineUser size={30}></AiOutlineUser>
+              </div>
               <div className="col align-self-start d-flex justify-content-center ">
                 <Card className="my-2 w-100" color="white">
                   <CardHeader>Filtro</CardHeader>
                   <CardBody>
                     <Row>
                       <div className="col-sm">
-                        <CardTitle tag="h5">Nombre de medico</CardTitle>
+                        <CardTitle tag="h5">Nombre de usuario</CardTitle>
                         <CardText>
                           <Input
                             type="text"
@@ -171,7 +165,7 @@ const App = () => {
                         </CardText>
                       </div>
                       <div className="col-sm">
-                        <CardTitle tag="h5">Correo</CardTitle>
+                        <CardTitle tag="h5">Numero Celular</CardTitle>
                         <CardText>
                           <Input
                             type="text"
@@ -184,22 +178,22 @@ const App = () => {
                     </Row>
                     <br />
                     <div className="d-flex justify-content-end">
-                      <Button outline color={"success"} onClick={() => filtroEmail(filtroValorMedico, filtroValorEmail)}>
-                        <AiFillFilter className="mr-2" size={23}></AiFillFilter>
-                        Filtro
-                      </Button>
+                      <CButton color="success" onClick={() => filtroEmail(filtroValorMedico, filtroValorEmail)} text="Filtro" />
                     </div>
                   </CardBody>
                 </Card>
               </div>
+              <br />
+              <Container className="d-flex justify-content-end ">
+                <CButton color="success" onClick={() => handleNav()} text="Crear usuario" />
+              </Container>
             </Container>
-            <br />
             <br />
 
             <Table size="sm" striped={true} responsive={"sm"}>
               <thead>
                 <tr>
-                  {Data.map((valor) => (
+                  {DataTableHeader.map((valor) => (
                     <th className="" key={valor}>
                       {valor}
                     </th>
@@ -211,7 +205,10 @@ const App = () => {
                   <tr key={dato.id}>
                     <td>{dato.id}</td>
                     <td>{dato.nombre}</td>
-                    <td contentEditable>{dato.email}</td>
+                    <td>{dato.email}</td>
+                    <td>{dato.idClinica}</td>
+                    <td>{dato.idClinica}</td>
+                    <td>{dato.idClinica}</td>
                     <td>{dato.idClinica}</td>
                     <td className="gap-5">
                       <AiFillEdit className="mr-2" onClick={() => mostrarModalActualizar(dato)} size={23}></AiFillEdit>
@@ -225,23 +222,42 @@ const App = () => {
         </Row>
       </Container>
 
-      <Modal isOpen={modalActualizar}>
+      <Modal isOpen={modalActualizar} size="xl">
         <ModalHeader>
           <div>
-            <h3>Editar Registro</h3>
+            <h3>Editar Usuarios</h3>
           </div>
         </ModalHeader>
 
         <ModalBody>
-          <CFormGroupInput handleChange={handleChange} inputName="nombre" labelName="Medico:" value={form.nombre} />
-          <CFormGroupInput handleChange={handleChange} inputName="email" labelName="Email:" value={form.email} />
           <FormGroup>
-            <label>idClinica:</label>
-            <select className="form-select" onChange={handleChange} name="idClinica" aria-label="Seleccionar clinica">
-              {data2.map((datas: DataClinica) => (
-                <option value={datas.id}>{datas.nombre}</option>
-              ))}
-            </select>
+            <Row>
+              {/* Debe de coincidir el inputname con el value */}
+              <Col md={"6"}>
+                <CFormGroupInput handleChange={handleChange} inputName="usuario" labelName="Usuario:" value={form.nombre} />
+              </Col>
+              <Col md={"6"}>
+                <CFormGroupInput
+                  handleChange={handleChange}
+                  inputName="password"
+                  labelName="Contraseña:"
+                  value={form.email}
+                  type="password"
+                />
+              </Col>
+              <Col md={"6"}>
+                <CFormGroupInput handleChange={handleChange} inputName="nombre" labelName="Nombre:" value={form.email} />
+              </Col>
+              <Col md={"6"}>
+                <CFormGroupInput handleChange={handleChange} inputName="celular" labelName="Celular:" value={form.email} />
+              </Col>
+              <Col md={"6"}>
+                <CFormGroupInput handleChange={handleChange} inputName="telefono" labelName="Telefono:" value={form.email} />
+              </Col>
+              <Col md={"6"}>
+                <CFormGroupInput handleChange={handleChange} inputName="email" labelName="Email:" value={form.email} />
+              </Col>
+            </Row>
           </FormGroup>
         </ModalBody>
 
@@ -269,6 +285,6 @@ const App = () => {
       </Modal>
     </>
   );
-};
+}
 
-export default App;
+export default Usuarios;

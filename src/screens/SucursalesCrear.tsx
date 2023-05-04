@@ -1,33 +1,36 @@
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import {
-  Table,
-  Button,
-  Col,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  FormGroup,
-  ModalFooter,
-  Label,
-  Input,
-  Container,
-  Row,
-  Card,
   Alert,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  CardText,
+  CardTitle,
+  Col,
+  Container,
+  FormGroup,
+  Input,
+  Label,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Row,
+  Table,
 } from "reactstrap";
-
-import useReadHook, { Forma, DataClinica } from "../hooks/useReadHook";
-import useModalHook from "../hooks/useModalHook";
-
-import CFormGroupInput from "../components/CFormGroupInput";
-import CButton from "../components/CButton";
-import { jezaApi } from "../api/jezaApi";
 import SidebarHorizontal from "../components/SideBarHorizontal";
+import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import CButton from "../components/CButton";
+import useReadHook, { Forma } from "../hooks/useReadHook";
+import { jezaApi } from "../api/jezaApi";
+import { useNavigate } from "react-router-dom";
+import useModalHook from "../hooks/useModalHook";
+import CFormGroupInput from "../components/CFormGroupInput";
 import TabPrueba from "./TabPrueba";
-import { Dots } from "react-activity";
-import "react-activity/dist/library.css";
-function Menu() {
+import TabPruebaProductos from "./TabPruebaProductos";
+
+function SucursalesCrear() {
   const { data: data1, llamada: llamada1, setdata } = useReadHook({ url: "Clinica" });
   const {
     modalInsertar,
@@ -44,7 +47,11 @@ function Menu() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isClicked, setIsClicked] = useState<boolean>(false);
   const [isOk, setIsOk] = useState<string>("false");
-
+  const [filtroValorEmail, setFiltroValorEmail] = useState("");
+  const navigate = useNavigate();
+  const handleCheckboxChange = (event: { target: { checked: boolean | ((prevState: boolean) => boolean) } }) => {
+    setIsChecked(event.target.checked);
+  };
   const [form, setForm] = useState<Forma>({
     id: 1,
     nombre: "",
@@ -54,6 +61,14 @@ function Menu() {
     telefono: "",
     mostrarTel: false,
   });
+  const mostrarModalActualizar = (dato: Forma) => {
+    setForm(dato);
+    setModalActualizar(true);
+  };
+  const handleNav = () => {
+    navigate("/UsuariosCrear");
+  };
+  const [filtroValorMedico, setFiltroValorMedico] = useState("");
 
   const filtroMédico = (datoMedico: string) => {
     var resultado = data1.filter((elemento: any) => {
@@ -63,10 +78,34 @@ function Menu() {
     });
     setdata(resultado);
   };
+  const filtroEmail = (datoMedico: string, datoEmail: string) => {
+    var resultado = data1.filter((elemento: any) => {
+      // Aplica la lógica del filtro solo si hay valores en los inputs
+      if (
+        (datoEmail === "" || elemento.email.toLowerCase().includes(datoEmail.toLowerCase())) &&
+        (datoMedico === "" || elemento.nombre.toLowerCase().includes(datoMedico.toLowerCase())) &&
+        elemento.nombre.length > 2
+      ) {
+        return elemento;
+      }
+    });
+    setdata(resultado);
+  };
+  const eliminar = (dato: Forma) => {
+    const opcion = window.confirm(`Estás Seguro que deseas Eliminar el elemento ${dato.id}`);
+    if (opcion) {
+      jezaApi.delete(`/Medico?idMedico=${dato.id}`).then(() => {
+        setModalActualizar(false);
+        llamada1();
+      });
+    }
+  };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     setForm((prevState) => ({ ...prevState, [name]: value }));
   };
+  const DataTableHeader = ["Usuario", "Nombre", "Celular", "Telefono", "Email", "Fecha Alta", "Fecha Actualización", "Acciones"];
+  const [isChecked, setIsChecked] = useState(false);
 
   // const insertar = () => {
   //   jezaApi
@@ -130,47 +169,43 @@ function Menu() {
       </Row>
       <br />
       <div className="container px-2 ">
-        <h1> Crear Médicos </h1>
+        <h1> Sucursales Crear </h1>
         <br />
-        <div className="flex-row align-content-md-end">
-          <CFormGroupInput handleChange={handleChange} inputName="nombre" labelName="Medico:" value={form.nombre} />
-        </div>
-        <CFormGroupInput handleChange={handleChange} inputName="email" labelName="Email:" value={form.email} />
         <FormGroup>
-          <Label for="exampleSelect">Clinica</Label>
-          <Row className="align-items-center">
-            <Col sm={"9"} m={"8"} lg={"10"} xs>
-              <Input className="" id="idClinica" name="select" type="text" value={dataClinica}></Input>
+          <Row>
+            {/* Debe de coincidir el inputname con el value */}
+            <Col md={"6"}>
+              <CFormGroupInput handleChange={handleChange} inputName="nombre" labelName="nombre:" value={form.nombre} />
             </Col>
-            <Col>
-              <Button className="" color="success" onClick={() => mostrarModalInsertar()}>
-                Seleccionar Clinica
-              </Button>
+            <Col md={"6"}>
+              <CFormGroupInput
+                handleChange={handleChange}
+                inputName="direccion"
+                labelName="direccion:"
+                value={form.email}
+                type="password"
+              />
+            </Col>
+            <Col md={"6"}>
+              <label className="checkbox-container">
+                <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} value={form.email} name="idmarca" />
+                <span className="checkmark"></span>
+                ¿Es Marca?
+              </label>
+            </Col>
+            <Col md={"6"}>
+              <label className="checkbox-container">
+                <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} value={form.email} name="en_linea" />
+                <span className="checkmark"></span>
+                ¿En linea?
+              </label>
             </Col>
           </Row>
         </FormGroup>
-        <br />
-        <br />
-        <div className="8bnm">
-          {/* <CButton color="success" onClick={() => insertar()} text="Crear Médico"></CButton> */}
-          <div>
-            <Button onClick={() => insertar2()}> Crear Médico </Button>
-            {/* {isClicked && !isLoading ? <div>✅</div> : null}
-              {isClicked && isLoading ? <Dots/> : null} */}
-          </div>
-          <br />
-          <Alert color="success" isOpen={isClicked} toggle={onDismiss}>
-            Médico creado con éxito
-          </Alert>
-        </div>
+        <Button onClick={() => null}>Guardar sucursal</Button>
       </div>
-      <br />
-      <Container>
-        <Card body>
-          <TabPrueba></TabPrueba>
-        </Card>
-      </Container>
-      <Modal isOpen={modalInsertar} size={"xl"} fade hover>
+
+      {/* <Modal isOpen={modalInsertar} size={"xl"} fade hover>
         <ModalHeader>
           <div>
             <h3>Selecciona Médico</h3>
@@ -225,9 +260,9 @@ function Menu() {
           </FormGroup>
         </ModalBody>
         <ModalFooter></ModalFooter>
-      </Modal>
+      </Modal> */}
     </>
   );
 }
 
-export default Menu;
+export default SucursalesCrear;
