@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import "./index.css";
+import InvCompras from "./screens/inventario/InvCompras";
 import Menu from "./screens/Menu";
 import Usuarios from "./screens/Usuarios";
 import Perfiles from "./screens/Perfiles";
@@ -20,6 +21,13 @@ import Productos from "./screens/Productos";
 import ProductosCrear from "./screens/ProductosCrear";
 import NominaDepartamentos from "./screens/NominaDepartamentos";
 import SucursalesCrear from "./screens/SucursalesCrear";
+
+const DataRoutes = [
+  {
+    path: "/InvCompras",
+    element: <InvCompras />,
+  },
+];
 
 const router = createBrowserRouter([
   {

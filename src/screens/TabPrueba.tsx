@@ -65,7 +65,12 @@ function TabPrueba() {
             <Col sm="4">
               <CFormGroupInput handleChange={handleChange} inputName="colonia" labelName="colonia:" value={form.email} />
               <CFormGroupInput handleChange={handleChange} inputName="población" labelName="población:" value={form.email} />
-              <CFormGroupInput handleChange={handleChange} inputName="fecha_nacimiento" labelName="fecha_nacimiento:" value={form.email} />
+              <CFormGroupInput
+                handleChange={handleChange}
+                inputName="fecha_nacimiento"
+                labelName="fecha_nacimiento:"
+                value={form.email}
+              />
             </Col>
             <Col sm="4">
               <CFormGroupInput handleChange={handleChange} inputName="estado" labelName="estado:" value={form.email} />
@@ -77,7 +82,12 @@ function TabPrueba() {
                 <option value="opcion3">Lugar de nacimiento 3</option>
               </Input>
               <div className="mb-3"></div>
-              <CFormGroupInput handleChange={handleChange} inputName="codigo_postal" labelName="codigo_postal:" value={form.email} />
+              <CFormGroupInput
+                handleChange={handleChange}
+                inputName="codigo_postal"
+                labelName="codigo_postal:"
+                value={form.email}
+              />
             </Col>
           </Row>
           <br />
@@ -113,8 +123,18 @@ function TabPrueba() {
               </Input>
             </Col>
             <Col>
-              <CFormGroupInput handleChange={handleChange} inputName="observaciones" labelName="Observaciones:" value={form.email} />
-              <CFormGroupInput handleChange={handleChange} inputName="nivel_escolaridad" labelName="Nivel de escolaridad:" value={form.email} />
+              <CFormGroupInput
+                handleChange={handleChange}
+                inputName="observaciones"
+                labelName="Observaciones:"
+                value={form.email}
+              />
+              <CFormGroupInput
+                handleChange={handleChange}
+                inputName="nivel_escolaridad"
+                labelName="Nivel de escolaridad:"
+                value={form.email}
+              />
               <Label>Puesto</Label>
               <Input type="select" name="select" id="exampleSelect" value={selectedValue} onChange={handleChange}>
                 <option value="">--Selecciona una opción--</option>
@@ -136,11 +156,21 @@ function TabPrueba() {
                 <CFormGroupInput handleChange={handleChange} inputName="fecha_baja" labelName="Fecha_baja:" value={form.email} />
               </Col>
               <Col sm="4">
-                <CFormGroupInput handleChange={handleChange} inputName="motivo_baja" labelName="Motivo_baja:" value={form.email} />
+                <CFormGroupInput
+                  handleChange={handleChange}
+                  inputName="motivo_baja"
+                  labelName="Motivo_baja:"
+                  value={form.email}
+                />
               </Col>
 
               <Col sm="4">
-                <CFormGroupInput handleChange={handleChange} inputName="motivo_baja_especificacion" labelName="motivo_baja_especificacion:" value={form.email} />
+                <CFormGroupInput
+                  handleChange={handleChange}
+                  inputName="motivo_baja_especificacion"
+                  labelName="motivo_baja_especificacion:"
+                  value={form.email}
+                />
               </Col>
             </Row>
           </Container>
