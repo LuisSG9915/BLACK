@@ -14,7 +14,14 @@ import { Dots } from "react-activity";
 import "react-activity/dist/library.css";
 function Menu() {
   const { data: data1, llamada: llamada1, setdata } = useReadHook({ url: "Clinica" });
-  const { modalInsertar, setModalInsertar, setModalActualizar, cerrarModalActualizar, cerrarModalInsertar, mostrarModalInsertar } = useModalHook();
+  const {
+    modalInsertar,
+    setModalInsertar,
+    setModalActualizar,
+    cerrarModalActualizar,
+    cerrarModalInsertar,
+    mostrarModalInsertar,
+  } = useModalHook();
   const Data = ["ID", "Clinica", "Acciones"];
   const [filtroValorClinica, setFiltroValorClinica] = useState("");
   const [dataClinica, setDataClinica] = useState<undefined | string>("");
@@ -86,6 +93,20 @@ function Menu() {
     }
 }
 
+  // function onDismiss(): void {
+  //   setIsClicked(false);
+  //   setForm({
+  //     id: 1,
+  //     nombre: "",
+  //     email: "",
+  //     idClinica: 1,
+  //     nombreClinica: "",
+  //     telefono: "",
+  //     mostrarTel: false,
+  //   });
+  //   setDataClinica("")
+  // }
+
   function onDismiss(): void {
     setIsClicked(false);
     setForm({
@@ -97,7 +118,7 @@ function Menu() {
       telefono: "",
       mostrarTel: false,
     });
-    setDataClinica("")
+    setDataClinica("");
   }
 
   return (

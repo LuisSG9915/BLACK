@@ -1,16 +1,22 @@
 .sidebar-container {
-  height: 100%; /* Altura de la pantalla completa */
-  width: 100%; /* Ancho del sidebar */
-  padding: 20px; /* Espacio interno del sidebar */
-  background-color: #96adc5; /* Color de fondo del sidebar */
+  height: 100%;
+  /* Altura de la pantalla completa */
+  width: 100%;
+  /* Ancho del sidebar */
+  padding: 20px;
+  /* Espacio interno del sidebar */
+  background-color: #96adc5;
+  /* Color de fondo del sidebar */
 }
 
 .minimo_celda {
   max-width: 80px;
 }
+
 .celda_interna {
   gap: 10px;
 }
+
 .navar {
   background-color: #a8acb6;
 }

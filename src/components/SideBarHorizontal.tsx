@@ -21,7 +21,7 @@ const SidebarHorizontal = () => {
                 Inventario
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>Compras</DropdownItem>
+                <DropdownItem onClick={() => navigate("/InvCompras")}>Compras</DropdownItem>
                 <DropdownItem>Transacciones</DropdownItem>
                 <DropdownItem onClick={() => navigate("/InventariosAjustes")}>Ajustes</DropdownItem>
               </DropdownMenu>
