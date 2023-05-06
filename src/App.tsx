@@ -26,8 +26,10 @@ import CFormGroupInput from "./components/CFormGroupInput";
 import CButton from "./components/CButton";
 import { useNavigate } from "react-router-dom";
 import SidebarHorizontal from "./components/SideBarHorizontal";
+import { Alert } from "reactstrap";
 
 import { AiFillDelete, AiFillEdit, AiFillFilter, AiFillSmile } from "react-icons/ai";
+import Title from "./components/Title";
 
 const App = () => {
   const { data: data1, llamada: llamada1, setdata } = useReadHook({ url: "Medico" });
@@ -119,7 +121,9 @@ const App = () => {
     });
     setdata(resultado);
   };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     setForm((prevState) => ({ ...prevState, [name]: value }));
   };
@@ -137,20 +141,10 @@ const App = () => {
         <SidebarHorizontal />
       </Row>
       <Container>
-        {/* <br /> */}
-
         <Row>
-          {/* <Col xs={3} sm={3} md={4} lg={3} xl={2} className={isSidebarVisible ? "d-flex flex-column" : "d-none d-sm-flex flex-column"}>
-            <Sidebar />
-          </Col> */}
           <Col>
             <Container fluid>
-              <br />
-              <h1> Médicos </h1>
-              <Container className="d-flex justify-content-end ">
-                <CButton color="success" onClick={() => handleNav()} text="Crear médico" />
-              </Container>
-              <br />
+              <Title handleNav={handleNav}></Title>
               <div className="col align-self-start d-flex justify-content-center ">
                 <Card className="my-2 w-100" color="white">
                   <CardHeader>Filtro</CardHeader>
@@ -184,7 +178,11 @@ const App = () => {
                     </Row>
                     <br />
                     <div className="d-flex justify-content-end">
-                      <Button outline color={"success"} onClick={() => filtroEmail(filtroValorMedico, filtroValorEmail)}>
+                      <Button
+                        outline
+                        color={"success"}
+                        onClick={() => filtroEmail(filtroValorMedico, filtroValorEmail)}
+                      >
                         <AiFillFilter className="mr-2" size={23}></AiFillFilter>
                         Filtro
                       </Button>
@@ -200,9 +198,7 @@ const App = () => {
               <thead>
                 <tr>
                   {Data.map((valor) => (
-                    <th className="" key={valor}>
-                      {valor}
-                    </th>
+                    <th key={valor}>{valor}</th>
                   ))}
                 </tr>
               </thead>
@@ -214,8 +210,16 @@ const App = () => {
                     <td contentEditable>{dato.email}</td>
                     <td>{dato.idClinica}</td>
                     <td className="gap-5">
-                      <AiFillEdit className="mr-2" onClick={() => mostrarModalActualizar(dato)} size={23}></AiFillEdit>
-                      <AiFillDelete color="lightred" onClick={() => eliminar(dato)} size={23}></AiFillDelete>
+                      <AiFillEdit
+                        className="mr-2"
+                        onClick={() => mostrarModalActualizar(dato)}
+                        size={23}
+                      ></AiFillEdit>
+                      <AiFillDelete
+                        color="lightred"
+                        onClick={() => eliminar(dato)}
+                        size={23}
+                      ></AiFillDelete>
                     </td>
                   </tr>
                 ))}
@@ -233,11 +237,26 @@ const App = () => {
         </ModalHeader>
 
         <ModalBody>
-          <CFormGroupInput handleChange={handleChange} inputName="nombre" labelName="Medico:" value={form.nombre} />
-          <CFormGroupInput handleChange={handleChange} inputName="email" labelName="Email:" value={form.email} />
+          <CFormGroupInput
+            handleChange={handleChange}
+            inputName="nombre"
+            labelName="Medico:"
+            value={form.nombre}
+          />
+          <CFormGroupInput
+            handleChange={handleChange}
+            inputName="email"
+            labelName="Email:"
+            value={form.email}
+          />
           <FormGroup>
             <label>idClinica:</label>
-            <select className="form-select" onChange={handleChange} name="idClinica" aria-label="Seleccionar clinica">
+            <select
+              className="form-select"
+              onChange={handleChange}
+              name="idClinica"
+              aria-label="Seleccionar clinica"
+            >
               {data2.map((datas: DataClinica) => (
                 <option value={datas.id}>{datas.nombre}</option>
               ))}
@@ -260,7 +279,11 @@ const App = () => {
         <ModalBody>
           <CFormGroupInput handleChange={handleChange} inputName="nombre" labelName="Nombre:" />
           <CFormGroupInput handleChange={handleChange} inputName="email" labelName="Email:" />
-          <CFormGroupInput handleChange={handleChange} inputName="idClinica" labelName="Id Clinica:" />
+          <CFormGroupInput
+            handleChange={handleChange}
+            inputName="idClinica"
+            labelName="Id Clinica:"
+          />
         </ModalBody>
         <ModalFooter>
           <CButton color="primary" onClick={() => insertar()} text="Insertar" />

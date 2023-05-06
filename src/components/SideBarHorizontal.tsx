@@ -24,7 +24,7 @@ const SidebarHorizontal = () => {
 
   return (
     <div>
-      <Navbar className="navar" expand={"md"}>
+      <Navbar className="navar" expand={"md"} color="rgba(225,224,253,255)">
         <NavbarBrand href="/">The New Black </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
@@ -97,10 +97,14 @@ const SidebarHorizontal = () => {
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem onClick={() => navigate("/usuarios")}>User</DropdownItem>
-                <DropdownItem onClick={() => navigate("/InventariosAjustes")}>Inventario No</DropdownItem>
+                <DropdownItem onClick={() => navigate("/InventariosAjustes")}>
+                  Inventario No
+                </DropdownItem>
                 <DropdownItem onClick={() => navigate("/Sucursales")}>Sucursales</DropdownItem>
                 <DropdownItem onClick={() => navigate("/Proveedores")}>Proveedores</DropdownItem>
-                <DropdownItem onClick={() => navigate("/NominaTrabajadores")}>NominaTrabajadores</DropdownItem>
+                <DropdownItem onClick={() => navigate("/NominaTrabajadores")}>
+                  NominaTrabajadores
+                </DropdownItem>
                 <DropdownItem onClick={() => navigate("/Productos")}>Productos</DropdownItem>
                 <DropdownItem onClick={() => navigate("/Perfiles")}>Perfiles</DropdownItem>
               </DropdownMenu>

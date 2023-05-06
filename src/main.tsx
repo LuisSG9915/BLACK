@@ -22,13 +22,6 @@ import ProductosCrear from "./screens/ProductosCrear";
 import NominaDepartamentos from "./screens/NominaDepartamentos";
 import SucursalesCrear from "./screens/SucursalesCrear";
 
-const DataRoutes = [
-  {
-    path: "/InvCompras",
-    element: <InvCompras />,
-  },
-];
-
 const router = createBrowserRouter([
   {
     path: "/",

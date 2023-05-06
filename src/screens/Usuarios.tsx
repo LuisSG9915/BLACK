@@ -1,23 +1,6 @@
 import React, { createContext, useState } from "react";
 import { AiFillEdit, AiFillDelete, AiOutlineUser } from "react-icons/ai";
-import {
-  Row,
-  Container,
-  Col,
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  CardText,
-  Input,
-  Table,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  FormGroup,
-  ModalFooter,
-  Button,
-} from "reactstrap";
+import { Row, Container, Col, Card, CardHeader, CardBody, CardTitle, CardText, Input, Table, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, Button } from "reactstrap";
 import CButton from "../components/CButton";
 import CFormGroupInput from "../components/CFormGroupInput";
 import SidebarHorizontal from "../components/SideBarHorizontal";
@@ -29,15 +12,7 @@ import useModalHook from "../hooks/useModalHook";
 function Usuarios() {
   const { data: data1, llamada: llamada1, setdata } = useReadHook({ url: "Medico" });
   const { data: data2 } = useReadHook({ url: "Clinica" });
-  const {
-    modalActualizar,
-    modalInsertar,
-    setModalInsertar,
-    setModalActualizar,
-    cerrarModalActualizar,
-    cerrarModalInsertar,
-    mostrarModalInsertar,
-  } = useModalHook();
+  const { modalActualizar, modalInsertar, setModalInsertar, setModalActualizar, cerrarModalActualizar, cerrarModalInsertar, mostrarModalInsertar } = useModalHook();
   const [filtroValorMedico, setFiltroValorMedico] = useState("");
   const [filtroValorEmail, setFiltroValorEmail] = useState("");
   const navigate = useNavigate();
@@ -237,13 +212,7 @@ function Usuarios() {
                 <CFormGroupInput handleChange={handleChange} inputName="usuario" labelName="Usuario:" value={form.nombre} />
               </Col>
               <Col md={"6"}>
-                <CFormGroupInput
-                  handleChange={handleChange}
-                  inputName="password"
-                  labelName="Contraseña:"
-                  value={form.email}
-                  type="password"
-                />
+                <CFormGroupInput handleChange={handleChange} inputName="password" labelName="Contraseña:" value={form.email} type="password" />
               </Col>
               <Col md={"6"}>
                 <CFormGroupInput handleChange={handleChange} inputName="nombre" labelName="Nombre:" value={form.email} />
