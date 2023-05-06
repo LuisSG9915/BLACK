@@ -134,14 +134,11 @@ function InventariosAjustes() {
           <Col>
             <Container fluid>
               <br />
-              <Row className="align-items-center">
-                <Col sm={"3"}>
-                  <h1> Inventarios </h1>
-                </Col>
-                <Col sm={"1"}>
-                  <MdInventory size={30}></MdInventory>
-                </Col>
-              </Row>
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <h1> Inventarios </h1>
+                <MdInventory size={30}></MdInventory>
+              </div>
+              
 
               <div className="col align-self-start d-flex justify-content-center ">
                 <Card className="my-2 w-100" color="white">
@@ -208,8 +205,8 @@ function InventariosAjustes() {
                     <td>{dato.idClinica}</td>
                     <td contentEditable> {dato.idClinica}</td>
                     <td contentEditable>{dato.idClinica}</td>
-                    <td>{dato.idClinica}</td>
-                    <td>{dato.idClinica}</td>
+                    <td contentEditable>{dato.idClinica}</td>
+                    <td contentEditable>{dato.idClinica}</td>
                     <td className="gap-5">
                       <AiFillEdit className="mr-2" onClick={() => mostrarModalActualizar(dato)} size={23}></AiFillEdit>
                       <AiFillDelete color="lightred" onClick={() => eliminar(dato)} size={23}></AiFillDelete>
