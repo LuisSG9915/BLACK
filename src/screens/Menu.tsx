@@ -1,6 +1,21 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Table, Button, Col, Modal, ModalHeader, ModalBody, FormGroup, ModalFooter, Label, Input, Container, Row, Card, Alert } from "reactstrap";
+import {
+  Table,
+  Button,
+  Col,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  FormGroup,
+  ModalFooter,
+  Label,
+  Input,
+  Container,
+  Row,
+  Card,
+  Alert,
+} from "reactstrap";
 
 import useReadHook, { Forma, DataClinica } from "../hooks/useReadHook";
 import useModalHook from "../hooks/useModalHook";
@@ -14,7 +29,14 @@ import { Dots } from "react-activity";
 import "react-activity/dist/library.css";
 function Menu() {
   const { data: data1, llamada: llamada1, setdata } = useReadHook({ url: "Clinica" });
-  const { modalInsertar, setModalInsertar, setModalActualizar, cerrarModalActualizar, cerrarModalInsertar, mostrarModalInsertar } = useModalHook();
+  const {
+    modalInsertar,
+    setModalInsertar,
+    setModalActualizar,
+    cerrarModalActualizar,
+    cerrarModalInsertar,
+    mostrarModalInsertar,
+  } = useModalHook();
   const Data = ["ID", "Clinica", "Acciones"];
   const [filtroValorClinica, setFiltroValorClinica] = useState("");
   const [dataClinica, setDataClinica] = useState<undefined | string>("");
@@ -61,30 +83,31 @@ function Menu() {
   //   setModalInsertar(false);
   // };
   const insertar2 = () => {
-    if (form.nombre=== '' || form.email=== '') {
-      console.log("nada")
-      setIsOk("no")
-    }else{
-      setIsClicked(true)
-      setIsLoading(true)
+    if (form.nombre === "" || form.email === "") {
+      console.log("nada");
+      setIsOk("no");
+    } else {
+      setIsClicked(true);
+      setIsLoading(true);
       jezaApi
-      .post("/Medico", {
-        nombre: form.nombre,
-        email: form.email,
-        idClinica: dataClinicaID,
-        telefono: "",
-        mostrarTel: false,
-      })
-      .then(() => {
-        llamada1();
-        setIsLoading(false)
-        }).catch((e) => {
-        setIsLoading(false)
-        setIsOk("si")
+        .post("/Medico", {
+          nombre: form.nombre,
+          email: form.email,
+          idClinica: dataClinicaID,
+          telefono: "",
+          mostrarTel: false,
+        })
+        .then(() => {
+          llamada1();
+          setIsLoading(false);
+        })
+        .catch((e) => {
+          setIsLoading(false);
+          setIsOk("si");
         });
-      setModalInsertar(false);    
+      setModalInsertar(false);
     }
-}
+  };
 
   function onDismiss(): void {
     setIsClicked(false);
@@ -97,7 +120,21 @@ function Menu() {
       telefono: "",
       mostrarTel: false,
     });
-    setDataClinica("")
+    setDataClinica("");
+  }
+
+  function onDismisss(): void {
+    setIsClicked(false);
+    setForm({
+      id: 1,
+      nombre: "",
+      email: "",
+      idClinica: 1,
+      nombreClinica: "",
+      telefono: "",
+      mostrarTel: false,
+    });
+    setDataClinica("");
   }
 
   return (
@@ -131,9 +168,8 @@ function Menu() {
         <div className="8bnm">
           {/* <CButton color="success" onClick={() => insertar()} text="Crear Médico"></CButton> */}
           <div>
-
-          <Button onClick={() => insertar2()} > Crear Médico </Button>
-              {/* {isClicked && !isLoading ? <div>✅</div> : null}
+            <Button onClick={() => insertar2()}> Crear Médico </Button>
+            {/* {isClicked && !isLoading ? <div>✅</div> : null}
               {isClicked && isLoading ? <Dots/> : null} */}
           </div>
           <br />

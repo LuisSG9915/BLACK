@@ -1,6 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate, useNavigation } from "react-router-dom";
-import { Navbar, NavbarBrand, Nav, NavItem, NavLink, Collapse, NavbarToggler, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, NavbarText } from "reactstrap";
+import {
+  Navbar,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+  Collapse,
+  NavbarToggler,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  NavbarText,
+} from "reactstrap";
 
 const SidebarHorizontal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +34,7 @@ const SidebarHorizontal = () => {
                 Inventario
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>Compras</DropdownItem>
+                <DropdownItem onClick={() => navigate("/InvCompras")}>Compras</DropdownItem>
                 <DropdownItem>Transacciones</DropdownItem>
                 <DropdownItem onClick={() => navigate("/InventariosAjustes")}>Ajustes</DropdownItem>
               </DropdownMenu>
